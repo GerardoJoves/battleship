@@ -1,29 +1,29 @@
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const path = require("path");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
 
 module.exports = {
-  entry: "./src/index.js",
+  entry: './src/index.js',
   output: {
-    path: path.resolve(__dirname, "dist"),
-    filename: "[name].bundle.js",
-    assetModuleFilename: "assets/[hash][ext][query]",
+    path: path.resolve(__dirname, 'dist'),
+    filename: '[name].bundle.js',
+    assetModuleFilename: 'assets/[hash][ext][query]',
     clean: true,
   },
   plugins: [
     new HtmlWebpackPlugin({
-      filename: "index.html",
-      template: "./src/templates/index.html",
+      filename: 'index.html',
+      template: './src/templates/index.html',
     }),
   ],
   module: {
     rules: [
       {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
-        type: "asset/resource",
+        type: 'asset/resource',
       },
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/i,
-        type: "asset/resource",
+        type: 'asset/resource',
       },
     ],
   },
