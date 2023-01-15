@@ -2,62 +2,47 @@ import Ship from './ship';
 
 export default class Gameboard {
   constructor() {
-    this.grid = [
-      [null, null, null, null, null, null, null, null, null, null],
-      [null, null, null, null, null, null, null, null, null, null],
-      [null, null, null, null, null, null, null, null, null, null],
-      [null, null, null, null, null, null, null, null, null, null],
-      [null, null, null, null, null, null, null, null, null, null],
-      [null, null, null, null, null, null, null, null, null, null],
-      [null, null, null, null, null, null, null, null, null, null],
-      [null, null, null, null, null, null, null, null, null, null],
-      [null, null, null, null, null, null, null, null, null, null],
-      [null, null, null, null, null, null, null, null, null, null],
-    ];
+    this.grid = Gameboard.#getGrid();
     this.ships = [];
-    this.sunkShips = 0;
-    this.allShipsSunk = false;
   }
 
-  placeShip({
-    row,
-    col,
-    direction,
-    length,
-  }) {
-    const shipIndex = this.ships.length;
+  placeShip({ cell, direction, length }) {
+    const shipNum = this.ships.length;
+    this.ships.push(new Ship(length));
     if (direction === 'vertical') {
-      for (let i = row; i < row + length; i++) {
-        this.grid[i][col] = shipIndex;
+      for (let i = cell; i < cell + length * 10; i += 10) {
+        this.grid[i] = shipNum;
       }
     } else if (direction === 'horizontal') {
-      for (let i = col; i < col + length; i++) {
-        this.grid[row][i] = shipIndex;
+      for (let i = cell; i < cell + length; i++) {
+        this.grid[i] = shipNum;
       }
     }
-    this.ships.push(new Ship(length));
   }
 
-  receiveAttack(row, col) {
-    const cellContent = this.grid[row][col];
-
+  receiveAttack(cell) {
+    const cellContent = this.grid[cell];
     /* A number represents a cell occupied by a ship.
       An 'x' represents a cell occupied by a ship that's been hit.
       And a dot ('.') represents a missed shot */
     if (typeof cellContent === 'number') {
       const ship = this.ships[cellContent];
       ship.hit();
-      if (ship.sunk) this.sunkShips += 1;
-      this.grid[row][col] = 'x';
-      this.#shipGotHit();
+      this.grid[cell] = 'x';
     } else if (cellContent === null) {
-      this.grid[row][col] = '.';
+      this.grid[cell] = '.';
     }
   }
 
-  #shipGotHit() {
-    if (this.sunkShips === this.ships.length) {
-      this.allShipsSunk = true;
+  areAllShipsDestroyed() {
+    return this.ships.every((ship) => ship.isSunk());
+  }
+
+  static #getGrid() {
+    const grid = [];
+    for (let i = 0; i < 100; i++) {
+      grid.push(null);
     }
+    return grid;
   }
 }

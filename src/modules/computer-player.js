@@ -9,10 +9,7 @@ export default class ComputerPlayer {
 
   randomAttack() {
     if (this.attacks.length === 0) return null;
-    const cell = this.attacks.pop();
-    const row = Math.floor(cell / 10);
-    const col = Math.abs(row * 10 - cell);
-    return [row, col];
+    return this.attacks.pop();
   }
 
   static #getUnorderListOfCells() {

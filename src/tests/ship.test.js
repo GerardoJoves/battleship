@@ -5,6 +5,6 @@ describe('Ship instance', () => {
     const ship = new Ship(2);
     ship.hit();
     ship.hit();
-    expect(ship.sunk).toBeTruthy();
+    expect(ship.isSunk()).toBeTruthy();
   });
 });
