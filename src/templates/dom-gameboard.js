@@ -1,3 +1,4 @@
+import { html } from 'lit-html';
 import events from '../modules/events';
 
 function attackEnemy(e) {
@@ -6,11 +7,11 @@ function attackEnemy(e) {
 }
 
 function gameboardCell(cellClass, cellNum) {
-  return `<div class=${cellClass} data-cell-number=${cellNum}><div>`;
+  return html`<div class=${cellClass} data-cell-number=${cellNum}><div>`;
 }
 
 function DOMBoard(boardState) {
-  return `<div class="gameBoard">
+  return html`<div class="gameBoard">
     ${boardState.map((cell, i) => {
     if (typeof cell === 'number') return gameboardCell('cell ship', i);
     if (cell === 'x') return gameboardCell('cell hit-ship', i);
@@ -21,7 +22,7 @@ function DOMBoard(boardState) {
 }
 
 function DOMEnemyBoard(boardState) {
-  return `<div class="gameboard" @click=${attackEnemy}>
+  return html`<div class="gameboard" @click=${attackEnemy}>
     ${boardState.map((cell, i) => {
     if (cell === 'x') return gameboardCell('cell hit-ship', i);
     if (cell === '.') return gameboardCell('cell missed-shot', i);
