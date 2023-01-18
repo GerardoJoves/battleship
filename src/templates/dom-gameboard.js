@@ -12,7 +12,7 @@ function attackEnemy(e) {
 }
 
 function gameboardCell(cellClass, cellNum) {
-  return html`<div class=${cellClass} data-cell-number=${cellNum}><div>`;
+  return html`<div class=${cellClass} data-cell-number=${cellNum}></div>`;
 }
 
 function coordsLetters() {

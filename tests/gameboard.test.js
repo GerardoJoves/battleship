@@ -86,4 +86,31 @@ describe('Gameboard instance', () => {
     gameboard.receiveAttack(35);
     expect(gameboard.areAllShipsDestroyed()).toBeTruthy();
   });
+
+  test('change ships positions', () => {
+    const gameboard = new Gameboard();
+    const expectation = [
+      null, null, null, null, null, null, null, null, null, null,
+      null, null, null, null, null, null, null, null, null, null,
+      null, null, null, null, null, null, null, null, null, null,
+      null, null, null, 0, 0, 0, 0, 0, null, null,
+      null, null, null, null, null, null, null, null, null, null,
+      null, null, null, null, null, null, null, null, null, null,
+      null, null, null, null, null, null, null, null, null, null,
+      null, null, null, null, null, null, null, null, null, null,
+      null, null, null, null, null, null, null, null, null, null,
+      null, null, null, null, null, null, null, null, null, null,
+    ];
+    gameboard.placeShip({
+      cell: 53,
+      direction: 'horizontal',
+      length: 5,
+    });
+    gameboard.changeShipPosition(0, {
+      cell: 33,
+      direction: 'horizontal',
+      length: 5,
+    });
+    expect(gameboard.grid).toStrictEqual(expectation);
+  });
 });

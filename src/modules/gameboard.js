@@ -4,20 +4,38 @@ export default class Gameboard {
   constructor() {
     this.grid = Gameboard.#getGrid();
     this.ships = [];
+    this.shipsPositions = [];
+  }
+
+  fillAdjacentCells(start, length, direction, value) {
+    if (direction === 'vertical') {
+      for (let i = start; i < start + length * 10; i += 10) {
+        this.grid[i] = value;
+      }
+    } else if (direction === 'horizontal') {
+      for (let i = start; i < start + length; i++) {
+        this.grid[i] = value;
+      }
+    }
   }
 
   placeShip({ cell, direction, length }) {
-    const shipNum = this.ships.length;
+    const shipIndex = this.ships.length;
     this.ships.push(new Ship(length));
-    if (direction === 'vertical') {
-      for (let i = cell; i < cell + length * 10; i += 10) {
-        this.grid[i] = shipNum;
-      }
-    } else if (direction === 'horizontal') {
-      for (let i = cell; i < cell + length; i++) {
-        this.grid[i] = shipNum;
-      }
-    }
+    this.shipsPositions.push({ cell, direction, length });
+    this.fillAdjacentCells(cell, length, direction, shipIndex);
+  }
+
+  removeShip(shipIndex) {
+    const [ship] = this.ships.splice(shipIndex, 1);
+    const [{ cell, direction, length }] = this.shipsPositions.splice(shipIndex, 1);
+    this.fillAdjacentCells(cell, length, direction, null);
+    return ship;
+  }
+
+  changeShipPosition(shipIndex, newPosition) {
+    this.removeShip(shipIndex);
+    this.placeShip(newPosition);
   }
 
   receiveAttack(cell) {
