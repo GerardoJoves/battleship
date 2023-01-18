@@ -1,5 +1,5 @@
-import ComputerPlayer from '../modules/computer-player';
-import GameBoard from '../modules/gameboard';
+import ComputerPlayer from '../src/modules/computer-player';
+import GameBoard from '../src/modules/gameboard';
 
 describe('computer player', () => {
   test('capable of making random plays', () => {

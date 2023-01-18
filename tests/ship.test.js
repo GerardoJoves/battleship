@@ -1,4 +1,4 @@
-import Ship from '../modules/ship';
+import Ship from '../src/modules/ship';
 
 describe('Ship instance', () => {
   test('sinks if num of hits equals length', () => {

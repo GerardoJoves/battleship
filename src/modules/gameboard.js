@@ -22,9 +22,8 @@ export default class Gameboard {
 
   receiveAttack(cell) {
     const cellContent = this.grid[cell];
-    /* A number represents a cell occupied by a ship.
-      An 'x' represents a cell occupied by a ship that's been hit.
-      And a dot ('.') represents a missed shot */
+    /* A number represents a cell occupied by a ship. An 'x' represents a ship
+    that's been hit. And a dot ('.') represents a missed shot */
     if (typeof cellContent === 'number') {
       const ship = this.ships[cellContent];
       ship.hit();
@@ -32,6 +31,10 @@ export default class Gameboard {
     } else if (cellContent === null) {
       this.grid[cell] = '.';
     }
+  }
+
+  isPlayableCell(cell) {
+    return typeof this.grid[cell] !== 'string';
   }
 
   areAllShipsDestroyed() {

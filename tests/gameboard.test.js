@@ -1,4 +1,4 @@
-import Gameboard from '../modules/gameboard';
+import Gameboard from '../src/modules/gameboard';
 
 describe('Gameboard instance', () => {
   test('places ships in specified position', () => {
