@@ -2,9 +2,8 @@ import Ship from './ship';
 
 export default class Gameboard {
   constructor() {
-    this.grid = Gameboard.#getGrid();
+    this.grid = Array(100).fill(null);
     this.ships = [];
-    this.shipsPositions = [];
   }
 
   fillAdjacentCells(start, length, direction, value) {
@@ -21,16 +20,18 @@ export default class Gameboard {
 
   placeShip({ cell, direction, length }) {
     const shipIndex = this.ships.length;
-    this.ships.push(new Ship(length));
-    this.shipsPositions.push({ cell, direction, length });
+    this.ships.push({
+      ship: new Ship(length),
+      position: { cell, direction, length },
+    });
     this.fillAdjacentCells(cell, length, direction, shipIndex);
   }
 
   removeShip(shipIndex) {
-    const [ship] = this.ships.splice(shipIndex, 1);
-    const [{ cell, direction, length }] = this.shipsPositions.splice(shipIndex, 1);
+    if (!this.ships[shipIndex]) return;
+    const [{ position }] = this.ships.splice(shipIndex, 1);
+    const { cell, length, direction } = position;
     this.fillAdjacentCells(cell, length, direction, null);
-    return ship;
   }
 
   changeShipPosition(shipIndex, newPosition) {
@@ -40,30 +41,24 @@ export default class Gameboard {
 
   receiveAttack(cell) {
     const cellContent = this.grid[cell];
-    /* A number represents a cell occupied by a ship. An 'x' represents a ship
-    that's been hit. And a dot ('.') represents a missed shot */
+    // a cell with a number indicates the index of the ship placed on that cell
     if (typeof cellContent === 'number') {
-      const ship = this.ships[cellContent];
+      const { ship } = this.ships[cellContent];
       ship.hit();
+      // a shit got hit in this cell
       this.grid[cell] = 'x';
     } else if (cellContent === null) {
+      // there's nothing on this cell. It's a missed shot
       this.grid[cell] = '.';
     }
   }
 
   isPlayableCell(cell) {
+    // a string represets an already played cell
     return typeof this.grid[cell] !== 'string';
   }
 
   areAllShipsDestroyed() {
-    return this.ships.every((ship) => ship.isSunk());
-  }
-
-  static #getGrid() {
-    const grid = [];
-    for (let i = 0; i < 100; i++) {
-      grid.push(null);
-    }
-    return grid;
+    return this.ships.every(({ ship }) => ship.isSunk());
   }
 }
