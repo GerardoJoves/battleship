@@ -4,7 +4,7 @@
 }
 
 html {
-  --board-border-color: rgb(128, 124, 218);
+  --board-border-color: rgb(145, 163, 253);
   font-size: 16px;
 }
 
@@ -42,28 +42,72 @@ main {
   grid-auto-flow: column;
   grid-column-start: 2;
   grid-column-end: -1;
-  border-bottom: 1px solid var(--board-border-color);
 }
 
 .gameboard .number-coords {
   grid-row-start: 2;
   grid-row-end: span 10;
-  border-right: 1px solid var(--board-border-color);
 }
 
 .gameboard .cell {
-  border-bottom: 1px solid var(--board-border-color);
-  border-right: 1px solid var(--board-border-color);
+  position: relative;
+  outline: 1px solid var(--board-border-color);
+  background-color: white;
 }
 
-.gameboard .cell.ship {
-  background-color: rgb(168, 197, 217);
-}
-
-.gameboard .cell.missed-shot {
+.gameboard .cell.missed-shot::after {
+  content: '';
+  z-index: 2;
+  position: absolute;
+  width: 30%;
+  height: 30%;
   background-color: gray;
+  border-radius: 50%;
+  top: 35%;
+  left: 35%;
 }
 
-.gameboard .cell.hit-ship {
-  background-color: rgb(246, 39, 39);
+.gameboard.enemy .cell.occupied.hit {
+  background-color: rgb(255, 213, 213);
+}
+
+.gameboard .cell.occupied.hit::after,
+.gameboard .cell.occupied.hit::before {
+  content: '';
+  z-index: 2;
+  position: absolute;
+  width: 10%;
+  height: 90%;
+  border-radius: 5px;
+  font-size: 160%;
+  background-color: rgb(255, 0, 0);
+  top: 5%;
+  left: 45%;
+}
+
+.gameboard .cell.occupied.hit::after {
+  transform: rotate(45deg);
+}
+
+.gameboard .cell.occupied.hit::before {
+  transform: rotate(-45deg);
+}
+
+.gameboard.player .cell.occupied {
+  outline: 1px solid rgb(227, 226, 255);
+}
+
+.gameboard .ship {
+  z-index: 1;
+  position: absolute;
+  background-color: rgba(178, 178, 255, 0.179);
+  outline: 2.5px solid #00f;
+}
+
+.gameboard .ship.horizontal {
+  height: calc(100% - 1px);
+}
+
+.gameboard .ship.vertical {
+  width: calc(100% - 1px);
 }

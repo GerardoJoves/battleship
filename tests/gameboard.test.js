@@ -4,16 +4,16 @@ describe('Gameboard instance', () => {
   test('places ships in specified position', () => {
     const gameboard = new Gameboard();
     const expectation = [
-      null, null, 3, null, null, null, null, null, null, null,
-      null, null, 3, null, null, null, 2, 2, 2, 2,
+      null, null, 4, null, null, null, null, null, null, null,
+      null, null, 4, null, null, null, 3, 3, 3, 3,
       null, null, null, null, null, null, null, null, null, null,
-      4, 4, 4, 4, null, null, null, null, null, null,
-      null, null, null, null, null, null, null, null, 0, null,
-      null, null, null, 5, 5, 5, 5, null, 0, null,
-      1, null, null, null, null, null, null, null, 0, null,
-      1, null, null, null, null, null, null, null, 0, null,
-      1, null, null, null, null, null, null, null, 0, null,
-      1, null, null, null, null, null, null, null, null, null,
+      5, 5, 5, 5, null, null, null, null, null, null,
+      null, null, null, null, null, null, null, null, 1, null,
+      null, null, null, 6, 6, 6, 6, null, 1, null,
+      2, null, null, null, null, null, null, null, 1, null,
+      2, null, null, null, null, null, null, null, 1, null,
+      2, null, null, null, null, null, null, null, 1, null,
+      2, null, null, null, null, null, null, null, null, null,
     ];
     gameboard.placeShip({
       cell: 48,
@@ -55,7 +55,7 @@ describe('Gameboard instance', () => {
       null, null, null, null, null, null, null, null, null, null,
       null, null, null, null, null, null, null, null, null, null,
       null, null, null, null, null, null, null, null, null, null,
-      null, null, null, 0, 0, 'x', 0, 0, null, null,
+      null, null, null, 1, 1, -1, 1, 1, null, null,
       null, null, null, null, null, null, null, null, null, null,
       null, '.', null, null, null, null, null, null, null, null,
       null, null, null, null, null, null, null, null, null, null,
@@ -70,6 +70,7 @@ describe('Gameboard instance', () => {
     });
     gameboard.receiveAttack(35);
     gameboard.receiveAttack(51);
+    console.log(gameboard.grid);
     expect(gameboard.grid).toStrictEqual(expectation);
   });
 
@@ -93,7 +94,7 @@ describe('Gameboard instance', () => {
       null, null, null, null, null, null, null, null, null, null,
       null, null, null, null, null, null, null, null, null, null,
       null, null, null, null, null, null, null, null, null, null,
-      null, null, null, 0, 0, 0, 0, 0, null, null,
+      null, null, null, 1, 1, 1, 1, 1, null, null,
       null, null, null, null, null, null, null, null, null, null,
       null, null, null, null, null, null, null, null, null, null,
       null, null, null, null, null, null, null, null, null, null,
@@ -106,7 +107,7 @@ describe('Gameboard instance', () => {
       direction: 'horizontal',
       length: 5,
     });
-    gameboard.changeShipPosition(0, {
+    gameboard.changeShipPosition(1, {
       cell: 33,
       direction: 'horizontal',
       length: 5,

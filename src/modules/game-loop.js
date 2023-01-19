@@ -14,12 +14,22 @@ export default class Game {
     this.computerPlayer = new ComputerPlayer('player two', new Gameboard());
     this.gameOver = false;
     this.player.gameboard.placeShip({
-      cell: 40,
+      cell: 43,
+      direction: 'vertical',
+      length: 4,
+    });
+    this.player.gameboard.placeShip({
+      cell: 16,
       direction: 'horizontal',
       length: 4,
     });
     this.computerPlayer.gameboard.placeShip({
-      cell: 40,
+      cell: 43,
+      direction: 'vertical',
+      length: 4,
+    });
+    this.computerPlayer.gameboard.placeShip({
+      cell: 16,
       direction: 'horizontal',
       length: 4,
     });
@@ -58,8 +68,11 @@ export default class Game {
   }
 
   render() {
-    const boardOne = DOMBoard(this.player.gameboard.grid);
-    const boardTwo = DOMEnemyBoard(this.computerPlayer.gameboard.grid);
+    const boardOne = DOMBoard(this.player.gameboard.grid, this.player.gameboard.ships);
+    const boardTwo = DOMEnemyBoard(
+      this.computerPlayer.gameboard.grid,
+      this.computerPlayer.gameboard.grid,
+    );
     render(boardOne, gameBoardContainerOne);
     render(boardTwo, gameBoardContainerTwo);
   }

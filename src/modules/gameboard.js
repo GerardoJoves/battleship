@@ -3,7 +3,8 @@ import Ship from './ship';
 export default class Gameboard {
   constructor() {
     this.grid = Array(100).fill(null);
-    this.ships = [];
+    // ships' indices must start from 1 because negative numbers are used to indicate a hit ship
+    this.ships = [null];
   }
 
   fillAdjacentCells(start, length, direction, value) {
@@ -42,11 +43,11 @@ export default class Gameboard {
   receiveAttack(cell) {
     const cellContent = this.grid[cell];
     // a cell with a number indicates the index of the ship placed on that cell
-    if (typeof cellContent === 'number') {
+    if (Number.isInteger(cellContent)) {
       const { ship } = this.ships[cellContent];
       ship.hit();
-      // a shit got hit in this cell
-      this.grid[cell] = 'x';
+      // a hit ship is represented by the index of the ship but negative
+      this.grid[cell] = Math.abs(cellContent) * -1;
     } else if (cellContent === null) {
       // there's nothing on this cell. It's a missed shot
       this.grid[cell] = '.';
@@ -54,11 +55,10 @@ export default class Gameboard {
   }
 
   isPlayableCell(cell) {
-    // a string represets an already played cell
-    return typeof this.grid[cell] !== 'string';
+    return this.grid[cell] === null || this.grid[cell] > 0;
   }
 
   areAllShipsDestroyed() {
-    return this.ships.every(({ ship }) => ship.isSunk());
+    return this.ships.slice(1).every(({ ship }) => ship.isSunk());
   }
 }

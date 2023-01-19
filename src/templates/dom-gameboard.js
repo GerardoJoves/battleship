@@ -11,8 +11,10 @@ function attackEnemy(e) {
   events.emit('attack enemy board', cell);
 }
 
-function gameboardCell(cellClass, cellNum) {
-  return html`<div class=${cellClass} data-cell-number=${cellNum}></div>`;
+function gameboardCell(cellClass, cellNum, ship = '') {
+  return html`<div class=${cellClass} data-cell-number=${cellNum}>
+    ${ship}
+  </div>`;
 }
 
 function coordsLetters() {
@@ -27,27 +29,40 @@ function coordsNums() {
   </div>`;
 }
 
-function DOMBoard(boardState) {
-  return html`<div class="gameboard">
+function DOMShip({ length, direction }) {
+  return html`<div 
+  class="ship ${direction}"
+  style="${direction === 'horizontal' ? 'width' : 'height'}: calc(${length * 100}% - 1px)"
+  ></div>`;
+}
+
+function DOMBoard(boardState, ships) {
+  const renderedShips = [];
+  return html`<div class="gameboard player">
     ${coordsLetters()}
     ${coordsNums()}
     ${boardState.map((cell, i) => {
-    if (typeof cell === 'number') return gameboardCell('cell ship', i);
-    if (cell === 'x') return gameboardCell('cell hit-ship', i);
     if (cell === '.') return gameboardCell('cell missed-shot', i);
-    return gameboardCell('cell empty', i);
+    if (cell === null) return gameboardCell('cell empty', i);
+    if (cell > 0 && renderedShips.includes(cell)) return gameboardCell('cell occupied', i);
+    if (cell < 0 && renderedShips.includes(Math.abs(cell))) {
+      return gameboardCell('cell occupied hit', i);
+    }
+    renderedShips.push(Math.abs(cell));
+    if (cell > 0) return gameboardCell('cell occupied', i, DOMShip(ships[cell].position));
+    return gameboardCell('cell occupied hit', i, DOMShip(ships[Math.abs(cell)].position));
   })}
   </div>`;
 }
 
 function DOMEnemyBoard(boardState) {
-  return html`<div class="gameboard" @click=${attackEnemy}>
+  return html`<div class="gameboard enemy" @click=${attackEnemy}>
     ${coordsLetters()}
     ${coordsNums()}
     ${boardState.map((cell, i) => {
-    if (cell === 'x') return gameboardCell('cell hit-ship', i);
     if (cell === '.') return gameboardCell('cell missed-shot', i);
-    return gameboardCell('cell empty', i);
+    if (cell === null || cell > 0) return gameboardCell('cell empty', i);
+    return gameboardCell('cell occupied hit', i);
   })}
   </div>`;
 }
