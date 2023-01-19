@@ -70,7 +70,6 @@ describe('Gameboard instance', () => {
     });
     gameboard.receiveAttack(35);
     gameboard.receiveAttack(51);
-    console.log(gameboard.grid);
     expect(gameboard.grid).toStrictEqual(expectation);
   });
 

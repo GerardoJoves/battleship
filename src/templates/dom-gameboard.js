@@ -1,4 +1,5 @@
 import { html } from 'lit-html';
+import grab from '../modules/drag-and-drop';
 import events from '../modules/events';
 
 const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
@@ -30,9 +31,11 @@ function coordsNums() {
 }
 
 function DOMShip({ length, direction }) {
-  return html`<div 
+  return html`<div
+  @pointerdown=${grab}
   class="ship ${direction}"
-  style="${direction === 'horizontal' ? 'width' : 'height'}: calc(${length * 100}% - 1px)"
+  style="${direction === 'horizontal' ? 'width' : 'height'}: calc(${length * 100}% - 1px);
+  top: 0px; left: 0px;"
   ></div>`;
 }
 
