@@ -8,12 +8,15 @@ export default class Gameboard {
   }
 
   fillAdjacentCells(start, length, direction, value) {
+    let lastCell;
     if (direction === 'vertical') {
-      for (let i = start; i < start + length * 10; i += 10) {
+      lastCell = length * 10 + start;
+      for (let i = start; i < lastCell; i += 10) {
         this.grid[i] = value;
       }
     } else if (direction === 'horizontal') {
-      for (let i = start; i < start + length; i++) {
+      lastCell = start + length;
+      for (let i = start; i < lastCell; i++) {
         this.grid[i] = value;
       }
     }
@@ -28,16 +31,27 @@ export default class Gameboard {
     this.fillAdjacentCells(cell, length, direction, shipIndex);
   }
 
+  updateGrid() {
+    this.ships.forEach((ship, i) => {
+      if (ship === null) return;
+      const { cell, direction, length } = ship.position;
+      this.fillAdjacentCells(cell, length, direction, i);
+    });
+  }
+
   removeShip(shipIndex) {
     if (!this.ships[shipIndex]) return;
     const [{ position }] = this.ships.splice(shipIndex, 1);
     const { cell, length, direction } = position;
     this.fillAdjacentCells(cell, length, direction, null);
+    this.updateGrid();
   }
 
-  changeShipPosition(shipIndex, newPosition) {
+  changeShipPosition(prevCell, newCell) {
+    const shipIndex = this.grid[prevCell];
+    const { position } = this.ships[shipIndex];
     this.removeShip(shipIndex);
-    this.placeShip(newPosition);
+    this.placeShip({ ...position, cell: newCell });
   }
 
   receiveAttack(cell) {

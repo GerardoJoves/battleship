@@ -1,21 +1,14 @@
 import { html } from 'lit-html';
 import grab from '../modules/drag-and-drop';
-import events from '../modules/events';
+import attackEnemy from '../modules/attack-enemy';
 
 const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
 const nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-function attackEnemy(e) {
-  let cell = e.target.getAttribute('data-cell-number');
-  if (cell === null) return;
-  cell = Number(cell);
-  events.emit('attack enemy board', cell);
-}
-
 function gameboardCell(cellClass, cellNum, ship = '') {
-  return html`<div class=${cellClass} data-cell-number=${cellNum}>
-    ${ship}
-  </div>`;
+  return html`<div
+    class=${cellClass}
+    data-cell-number=${cellNum}>${ship}</div>`;
 }
 
 function coordsLetters() {
@@ -33,13 +26,14 @@ function coordsNums() {
 function DOMShip({ length, direction }) {
   return html`<div
   @pointerdown=${grab}
+  @touchstart=${grab}
   class="ship ${direction}"
-  style="${direction === 'horizontal' ? 'width' : 'height'}: calc(${length * 100}% - 1px);
+  style="${direction === 'horizontal' ? 'width' : 'height'}: calc(${length * 100}% - 1.5px);
   top: 0px; left: 0px;"
   ></div>`;
 }
 
-function DOMBoard(boardState, ships) {
+function DOMPlayerBoard(boardState, ships) {
   const renderedShips = [];
   return html`<div class="gameboard player">
     ${coordsLetters()}
@@ -58,16 +52,17 @@ function DOMBoard(boardState, ships) {
   </div>`;
 }
 
-function DOMEnemyBoard(boardState) {
+function DOMEnemyBoard(boardState, ships) {
   return html`<div class="gameboard enemy" @click=${attackEnemy}>
     ${coordsLetters()}
     ${coordsNums()}
     ${boardState.map((cell, i) => {
     if (cell === '.') return gameboardCell('cell missed-shot', i);
     if (cell === null || cell > 0) return gameboardCell('cell empty', i);
+    if (ships[Math.abs(cell)].ship.isSunk()) return gameboardCell('cell occupied hit sunk', i);
     return gameboardCell('cell occupied hit', i);
   })}
   </div>`;
 }
 
-export { DOMBoard, DOMEnemyBoard };
+export { DOMPlayerBoard, DOMEnemyBoard };

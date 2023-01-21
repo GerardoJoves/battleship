@@ -71,6 +71,11 @@ main {
   background-color: rgb(255, 213, 213);
 }
 
+.gameboard.enemy .cell.sunk {
+  outline: 2.5px solid rgb(255, 0, 0);
+  z-index: 1;
+}
+
 .gameboard .cell.occupied.hit::after,
 .gameboard .cell.occupied.hit::before {
   content: '';
@@ -93,12 +98,8 @@ main {
   transform: rotate(-45deg);
 }
 
-.gameboard.player .cell.occupied {
-  outline: 1px solid rgb(227, 226, 255);
-}
-
 .gameboard .ship {
-  z-index: 1;
+  z-index: 5;
   position: absolute;
   background-color: rgba(178, 178, 255, 0.179);
   outline: 2.5px solid #00f;

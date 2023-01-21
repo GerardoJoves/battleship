@@ -106,11 +106,7 @@ describe('Gameboard instance', () => {
       direction: 'horizontal',
       length: 5,
     });
-    gameboard.changeShipPosition(1, {
-      cell: 33,
-      direction: 'horizontal',
-      length: 5,
-    });
+    gameboard.changeShipPosition(53, 33);
     expect(gameboard.grid).toStrictEqual(expectation);
   });
 });

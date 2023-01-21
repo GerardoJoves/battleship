@@ -1,5 +1,5 @@
 import { render } from 'lit-html';
-import { DOMBoard, DOMEnemyBoard } from '../templates/dom-gameboard';
+import { DOMPlayerBoard, DOMEnemyBoard } from '../templates/dom-gameboard';
 import Player from './player';
 import ComputerPlayer from './computer-player';
 import Gameboard from './gameboard';
@@ -67,11 +67,16 @@ export default class Game {
     && this.computerPlayer.gameboard.isPlayableCell(cell));
   }
 
+  changePlayerShipPosition(prevCell, newCell) {
+    this.player.gameboard.changeShipPosition(prevCell, newCell);
+    this.render();
+  }
+
   render() {
-    const boardOne = DOMBoard(this.player.gameboard.grid, this.player.gameboard.ships);
+    const boardOne = DOMPlayerBoard(this.player.gameboard.grid, this.player.gameboard.ships);
     const boardTwo = DOMEnemyBoard(
       this.computerPlayer.gameboard.grid,
-      this.computerPlayer.gameboard.grid,
+      this.computerPlayer.gameboard.ships,
     );
     render(boardOne, gameBoardContainerOne);
     render(boardTwo, gameBoardContainerTwo);

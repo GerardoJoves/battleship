@@ -8,3 +8,7 @@ game.render();
 events.on('attack enemy board', (cell) => {
   game.playRound(cell);
 });
+
+events.on('change ship position', ({ prevCell, newCell }) => {
+  game.changePlayerShipPosition(prevCell, newCell);
+});
