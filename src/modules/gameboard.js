@@ -7,19 +7,35 @@ export default class Gameboard {
     this.ships = [null];
   }
 
-  fillAdjacentCells(start, length, direction, value) {
-    let lastCell;
+  static* getPositionIndeces(start, direction, end) {
     if (direction === 'vertical') {
-      lastCell = length * 10 + start;
-      for (let i = start; i < lastCell; i += 10) {
-        this.grid[i] = value;
+      for (let i = start; i <= end; i += 10) {
+        yield i;
       }
     } else if (direction === 'horizontal') {
-      lastCell = start + length;
-      for (let i = start; i < lastCell; i++) {
-        this.grid[i] = value;
+      for (let i = start; i <= end; i++) {
+        yield i;
       }
     }
+  }
+
+  fillAdjacentCells(start, length, direction, value) {
+    const end = direction === 'vertical' ? length * 10 + (start - 10) : start + length - 1;
+    // eslint-disable-next-line
+    for (const i of Gameboard.getPositionIndeces(start, direction, end)) {
+      this.grid[i] = value;
+    }
+  }
+
+  isValidPosition(start, length, direction, curShip) {
+    if (direction === 'horizontal' && (start % 10) + length > 10) return false;
+    const end = direction === 'vertical' ? length * 10 + (start - 10) : start + length - 1;
+    // eslint-disable-next-line
+    for (const i of Gameboard.getPositionIndeces(start, direction, end)) {
+      if (i > 99 || i < 0) return false;
+      if (typeof this.grid[i] === 'number' && this.grid[i] !== curShip) return false;
+    }
+    return true;
   }
 
   placeShip({ cell, direction, length }) {
@@ -49,9 +65,10 @@ export default class Gameboard {
 
   changeShipPosition(prevCell, newCell) {
     const shipIndex = this.grid[prevCell];
-    const { position } = this.ships[shipIndex];
+    const { position: { direction, length } } = this.ships[shipIndex];
+    if (!this.isValidPosition(newCell, length, direction, shipIndex)) return;
     this.removeShip(shipIndex);
-    this.placeShip({ ...position, cell: newCell });
+    this.placeShip({ cell: newCell, direction, length });
   }
 
   receiveAttack(cell) {
