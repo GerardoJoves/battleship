@@ -4,7 +4,7 @@
 }
 
 html {
-  --board-border-color: rgb(145, 163, 253);
+  --board-border-color: rgb(166, 184, 216);
   font-size: 16px;
 }
 
@@ -101,8 +101,8 @@ main {
 .gameboard .ship {
   z-index: 5;
   position: absolute;
-  background-color: rgba(178, 178, 255, 0.179);
-  outline: 2.5px solid #00f;
+  background-color: rgba(152, 152, 252, 0.179);
+  outline: 2px solid #00f;
 }
 
 .gameboard .ship.horizontal {

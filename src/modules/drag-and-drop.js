@@ -16,6 +16,7 @@ function drop() {
   const shipFrontCoordY = rect.top + cellWidth / 2;
   const els = document.elementsFromPoint(shipFrontCoordX, shipFrontCoordY);
   const cell = els.find((el) => el.hasAttribute('data-cell-number'));
+  ship.classList.remove('dragging');
   ship.style.zIndex = 5;
   ship.style.top = 0;
   ship.style.left = 0;
@@ -53,6 +54,7 @@ function bindEvents() {
 function grab(e) {
   e.preventDefault();
   ship = e.target;
+  ship.classList.add('dragging');
   cellWidth = ship.parentElement.offsetWidth;
   ship.style.zIndex = 10;
   bindEvents();
