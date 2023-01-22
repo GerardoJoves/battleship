@@ -64,11 +64,22 @@ export default class Gameboard {
   }
 
   changeShipPosition(prevCell, newCell) {
+    if (prevCell === newCell) return;
     const shipIndex = this.grid[prevCell];
     const { position: { direction, length } } = this.ships[shipIndex];
     if (!this.isValidPosition(newCell, length, direction, shipIndex)) return;
     this.removeShip(shipIndex);
     this.placeShip({ cell: newCell, direction, length });
+  }
+
+  rotateShipAtCell(cellNum) {
+    const cellContent = this.grid[cellNum];
+    if (typeof cellContent !== 'number') return;
+    const { position: { length, direction, cell } } = this.ships[cellContent];
+    const newDirection = direction === 'horizontal' ? 'vertical' : 'horizontal';
+    if (!this.isValidPosition(cell, length, newDirection, cellContent)) return;
+    this.removeShip(cellContent);
+    this.placeShip({ cell, direction: newDirection, length });
   }
 
   receiveAttack(cell) {

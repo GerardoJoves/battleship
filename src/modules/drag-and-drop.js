@@ -6,6 +6,7 @@ let cellWidth = 0;
 
 function drag(e) {
   e.preventDefault();
+  ship.classList.add('dragging');
   ship.style.top = `${parseInt(ship.style.top, 10) + e.movementY}px`;
   ship.style.left = `${parseInt(ship.style.left, 10) + e.movementX}px`;
 }
@@ -25,6 +26,7 @@ function drop() {
   if (cell) {
     const prevCell = Number(ship.parentElement.getAttribute('data-cell-number'));
     const newCell = Number(cell.getAttribute('data-cell-number'));
+    if (prevCell === newCell) return;
     if (isValidCell(prevCell) && isValidCell(newCell)) {
       events.emit('change ship position', { prevCell, newCell });
     }
@@ -32,20 +34,12 @@ function drop() {
 }
 
 function unbindEvents() {
-  window.removeEventListener('touchmove', drag);
-  window.removeEventListener('touchend', drop);
-  document.body.removeEventListener('touchleave', drop);
-
   window.removeEventListener('pointermove', drag);
   window.removeEventListener('pointerup', drop);
   document.body.removeEventListener('pointerleave', drop);
 }
 
 function bindEvents() {
-  window.addEventListener('touchmove', drag);
-  window.addEventListener('touchend', drop);
-  document.body.addEventListener('touchleave', drop);
-
   window.addEventListener('pointermove', drag);
   window.addEventListener('pointerup', drop);
   document.body.addEventListener('pointerleave', drop);
@@ -54,7 +48,6 @@ function bindEvents() {
 function grab(e) {
   e.preventDefault();
   ship = e.target;
-  ship.classList.add('dragging');
   cellWidth = ship.parentElement.offsetWidth;
   ship.style.zIndex = 10;
   bindEvents();

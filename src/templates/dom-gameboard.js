@@ -1,6 +1,7 @@
 import { html } from 'lit-html';
 import grab from '../modules/drag-and-drop';
 import attackEnemy from '../modules/attack-enemy';
+import { rotate, stopRotationIfShipWasDragged } from '../modules/rotate-ship';
 
 const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
 const nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -25,8 +26,11 @@ function coordsNums() {
 
 function DOMShip({ length, direction }) {
   return html`<div
-  @pointerdown=${grab}
-  @touchstart=${grab}
+  @pointerdown=${(e) => {
+    grab(e);
+    stopRotationIfShipWasDragged(e);
+  }}
+  @click=${rotate}
   class="ship ${direction}"
   style="${direction === 'horizontal' ? 'width' : 'height'}: calc(${length * 100}% - 1.5px);
   top: 0px; left: 0px;"

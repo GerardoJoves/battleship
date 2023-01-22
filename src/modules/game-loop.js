@@ -72,6 +72,11 @@ export default class Game {
     this.render();
   }
 
+  rotatePlayerShip(cell) {
+    this.player.gameboard.rotateShipAtCell(cell);
+    this.render();
+  }
+
   render() {
     const boardOne = DOMPlayerBoard(this.player.gameboard.grid, this.player.gameboard.ships);
     const boardTwo = DOMEnemyBoard(

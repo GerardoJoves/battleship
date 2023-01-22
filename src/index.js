@@ -12,3 +12,7 @@ events.on('attack enemy board', (cell) => {
 events.on('change ship position', ({ prevCell, newCell }) => {
   game.changePlayerShipPosition(prevCell, newCell);
 });
+
+events.on('rotate ship at cell', (cell) => {
+  game.rotatePlayerShip(cell);
+});
