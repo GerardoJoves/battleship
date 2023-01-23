@@ -1,19 +1,19 @@
 import events from '../utilities/events';
 
-let clickWorks = true;
+let poiterMoved = false;
 
 function preventRotation() {
-  clickWorks = false;
+  poiterMoved = true;
 }
 
-function stopRotationIfShipWasDragged(e) {
+function startRotation(e) {
   e.target.addEventListener('pointermove', preventRotation);
 }
 
-function rotate(e) {
+function endRotation(e) {
   e.target.removeEventListener('pointermove', preventRotation);
-  if (!clickWorks) {
-    clickWorks = true;
+  if (poiterMoved) {
+    poiterMoved = false;
     return;
   }
   const els = document.elementsFromPoint(e.clientX, e.clientY);
@@ -21,6 +21,7 @@ function rotate(e) {
   if (!cell) return;
   const cellNum = Number.parseInt(cell.getAttribute('data-cell-number'), 10);
   events.emit('rotate ship at cell', cellNum);
+  poiterMoved = false;
 }
 
-export { stopRotationIfShipWasDragged, rotate };
+export { startRotation, endRotation };

@@ -7,7 +7,8 @@ export default class Gameboard {
     this.ships = [null];
   }
 
-  static* getPositionIndeces(start, direction, end) {
+  static* getCellsIndeces(start, direction, length) {
+    const end = direction === 'vertical' ? length * 10 + (start - 10) : start + length - 1;
     if (direction === 'vertical') {
       for (let i = start; i <= end; i += 10) {
         yield i;
@@ -20,18 +21,17 @@ export default class Gameboard {
   }
 
   fillAdjacentCells(start, length, direction, value) {
-    const end = direction === 'vertical' ? length * 10 + (start - 10) : start + length - 1;
     // eslint-disable-next-line
-    for (const i of Gameboard.getPositionIndeces(start, direction, end)) {
+    for (const i of Gameboard.getCellsIndeces(start, direction, length)) {
       this.grid[i] = value;
     }
   }
 
   isValidPosition(start, length, direction, curShip) {
     if (direction === 'horizontal' && (start % 10) + length > 10) return false;
-    const end = direction === 'vertical' ? length * 10 + (start - 10) : start + length - 1;
+    if (length * 10 + (start - 10) > 99) return false;
     // eslint-disable-next-line
-    for (const i of Gameboard.getPositionIndeces(start, direction, end)) {
+    for (const i of Gameboard.getCellsIndeces(start, direction, length)) {
       if (i > 99 || i < 0) return false;
       if (typeof this.grid[i] === 'number' && this.grid[i] !== curShip) return false;
     }

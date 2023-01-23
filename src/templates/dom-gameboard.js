@@ -1,7 +1,7 @@
 import { html } from 'lit-html';
 import grab from '../event-handlers/drag-and-drop';
 import attackEnemy from '../event-handlers/attack-enemy';
-import { rotate, stopRotationIfShipWasDragged } from '../event-handlers/rotate-ship';
+import { startRotation, endRotation } from '../event-handlers/rotate-ship';
 
 const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
 const nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -28,9 +28,9 @@ function DOMShip({ length, direction }) {
   return html`<div
   @pointerdown=${(e) => {
     grab(e);
-    stopRotationIfShipWasDragged(e);
+    startRotation(e);
   }}
-  @click=${rotate}
+  @pointerup=${endRotation}
   class="ship ${direction}"
   style="${direction === 'horizontal' ? 'width' : 'height'}: calc(${length * 100}% - 1.5px);
   top: 0px; left: 0px;"
