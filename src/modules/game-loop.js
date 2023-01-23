@@ -1,5 +1,6 @@
 import { render } from 'lit-html';
-import { DOMPlayerBoard, DOMEnemyBoard } from '../templates/dom-gameboard';
+import enemyGameboard from '../templates/enemy-gameboard';
+import playerGameboard from '../templates/player-gameboard';
 import events from '../utilities/events';
 import Player from './player';
 import ComputerPlayer from './computer-player';
@@ -78,8 +79,11 @@ export default class Game {
   }
 
   render() {
-    const boardOne = DOMPlayerBoard(this.player.gameboard.grid, this.player.gameboard.ships);
-    const boardTwo = DOMEnemyBoard(
+    const boardOne = playerGameboard(
+      this.player.gameboard.grid,
+      this.player.gameboard.ships,
+    );
+    const boardTwo = enemyGameboard(
       this.computerPlayer.gameboard.grid,
       this.computerPlayer.gameboard.ships,
     );
