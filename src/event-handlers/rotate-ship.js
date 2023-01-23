@@ -2,23 +2,20 @@ import events from '../utilities/events';
 
 let clickWorks = true;
 
-function resetClickWorks() {
-  clickWorks = true;
-}
-
-function checkIfPointerMovesDuringClick() {
+function preventRotation() {
   clickWorks = false;
 }
 
 function stopRotationIfShipWasDragged(e) {
-  e.target.addEventListener('pointermove', checkIfPointerMovesDuringClick);
-  e.target.addEventListener('pointerup', resetClickWorks);
+  e.target.addEventListener('pointermove', preventRotation);
 }
 
 function rotate(e) {
-  e.target.removeEventListener('pointermove', checkIfPointerMovesDuringClick);
-  e.target.removeEventListener('pointerup', resetClickWorks);
-  if (!clickWorks) return;
+  e.target.removeEventListener('pointermove', preventRotation);
+  if (!clickWorks) {
+    clickWorks = true;
+    return;
+  }
   const els = document.elementsFromPoint(e.clientX, e.clientY);
   const cell = els.find((el) => el.hasAttribute('data-cell-number'));
   if (!cell) return;
