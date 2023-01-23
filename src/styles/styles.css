@@ -73,6 +73,12 @@ main {
   z-index: 1;
 }
 
+.gameboard.enemy .cell.empty:hover {
+  outline: 3px solid green;
+  outline-offset: -2px;
+  z-index: 2;
+}
+
 .gameboard .cell.occupied.hit::after,
 .gameboard .cell.occupied.hit::before {
   content: '';
