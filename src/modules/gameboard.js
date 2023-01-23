@@ -29,7 +29,7 @@ export default class Gameboard {
 
   isValidPosition(start, length, direction, curShip) {
     if (direction === 'horizontal' && (start % 10) + length > 10) return false;
-    if (length * 10 + (start - 10) > 99) return false;
+    if (direction === 'vertical' && length * 10 + (start - 10) > 99) return false;
     // eslint-disable-next-line
     for (const i of Gameboard.getCellsIndeces(start, direction, length)) {
       if (i > 99 || i < 0) return false;
