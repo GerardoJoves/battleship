@@ -10,7 +10,7 @@ export default function draggableShip({ length, direction }) {
   }}
   @pointerup=${endRotation}
   class="ship ${direction}"
-  style="${direction === 'horizontal' ? 'width' : 'height'}: calc(${length * 100}% - 1.5px);
-  top: 0px; left: 0px;"
+  style="${direction === 'horizontal' ? 'width' : 'height'}: calc(${length * 100}% - 3px);
+  top: 1px; left: 1px;"
   ></div>`;
 }

@@ -19,8 +19,8 @@ function drop() {
   const cell = els.find((el) => el.hasAttribute('data-cell-number'));
   ship.classList.remove('dragging');
   ship.style.zIndex = 5;
-  ship.style.top = 0;
-  ship.style.left = 0;
+  ship.style.top = '1px';
+  ship.style.left = '1px';
   // eslint-disable-next-line
   unbindEvents();
   if (cell) {
