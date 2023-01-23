@@ -1,3 +1,4 @@
+import events from '../utilities/events';
 import Ship from './ship';
 
 export default class Gameboard {
@@ -77,7 +78,10 @@ export default class Gameboard {
     if (typeof cellContent !== 'number') return;
     const { position: { length, direction, cell } } = this.ships[cellContent];
     const newDirection = direction === 'horizontal' ? 'vertical' : 'horizontal';
-    if (!this.isValidPosition(cell, length, newDirection, cellContent)) return;
+    if (!this.isValidPosition(cell, length, newDirection, cellContent)) {
+      events.emit('rotation invalid', null);
+      return;
+    }
     this.removeShip(cellContent);
     this.placeShip({ cell, direction: newDirection, length });
   }

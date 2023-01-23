@@ -1,6 +1,15 @@
 import events from '../utilities/events';
 
 let poiterMoved = false;
+let shipBeingRotated = null;
+
+events.on('rotation invalid', () => {
+  const ship = shipBeingRotated;
+  ship.classList.add('shake');
+  setTimeout(() => {
+    ship.classList.remove('shake');
+  }, 800);
+});
 
 function preventRotation() {
   poiterMoved = true;
@@ -16,6 +25,7 @@ function endRotation(e) {
     poiterMoved = false;
     return;
   }
+  shipBeingRotated = e.target;
   const els = document.elementsFromPoint(e.clientX, e.clientY);
   const cell = els.find((el) => el.hasAttribute('data-cell-number'));
   if (!cell) return;
