@@ -1,4 +1,4 @@
-import events from './events';
+import events from '../utilities/events';
 import isValidCell from '../utilities/isValidCell';
 
 let ship = null;

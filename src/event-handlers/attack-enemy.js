@@ -1,4 +1,4 @@
-import events from './events';
+import events from '../utilities/events';
 
 export default function attackEnemy(e) {
   let cell = e.target.getAttribute('data-cell-number');

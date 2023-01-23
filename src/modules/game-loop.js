@@ -1,9 +1,9 @@
 import { render } from 'lit-html';
 import { DOMPlayerBoard, DOMEnemyBoard } from '../templates/dom-gameboard';
+import events from '../utilities/events';
 import Player from './player';
 import ComputerPlayer from './computer-player';
 import Gameboard from './gameboard';
-import events from './events';
 
 const gameBoardContainerOne = document.querySelector('.player.gameboard-container');
 const gameBoardContainerTwo = document.querySelector('.enemy.gameboard-container');

@@ -1,4 +1,4 @@
-import events from './events';
+import events from '../utilities/events';
 
 let clickWorks = true;
 
