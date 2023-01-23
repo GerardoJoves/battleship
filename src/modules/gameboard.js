@@ -1,6 +1,18 @@
 import events from '../utilities/events';
 import Ship from './ship';
 
+const SHIPS_PER_PLAYER = [
+  { length: 5 },
+  { length: 4 },
+  { length: 4 },
+  { length: 3 },
+  { length: 3 },
+  { length: 3 },
+  { length: 2 },
+  { length: 2 },
+  { length: 1 },
+];
+
 export default class Gameboard {
   constructor() {
     this.grid = Array(100).fill(null);
@@ -28,7 +40,7 @@ export default class Gameboard {
     }
   }
 
-  isValidPosition(start, length, direction, curShip) {
+  isValidPosition(start, length, direction, curShip = null) {
     if (direction === 'horizontal' && (start % 10) + length > 10) return false;
     if (direction === 'vertical' && length * 10 + (start - 10) > 99) return false;
     // eslint-disable-next-line
@@ -104,7 +116,31 @@ export default class Gameboard {
     return this.grid[cell] === null || this.grid[cell] > 0;
   }
 
+  isCellEmpty(cell) {
+    return this.grid[cell] === null;
+  }
+
   areAllShipsDestroyed() {
     return this.ships.slice(1).every(({ ship }) => ship.isSunk());
+  }
+
+  getRandomPosition(length) {
+    let cell;
+    let direction;
+    do {
+      cell = Math.floor(Math.random() * 100);
+      direction = Math.random() > 0.4 ? 'horizontal' : 'vertical';
+      if (!this.isValidPosition(cell, length, direction)) {
+        direction = direction === 'horizontal' ? 'vertical' : 'horizontal';
+      }
+    } while (!this.isValidPosition(cell, length, direction));
+    return { cell, length, direction };
+  }
+
+  placeShipsRandomly() {
+    SHIPS_PER_PLAYER.forEach((ship) => {
+      const position = this.getRandomPosition(ship.length);
+      this.placeShip(position);
+    });
   }
 }

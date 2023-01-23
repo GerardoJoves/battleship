@@ -6,34 +6,16 @@ import Player from './player';
 import ComputerPlayer from './computer-player';
 import Gameboard from './gameboard';
 
-const gameBoardContainerOne = document.querySelector('.player.gameboard-container');
-const gameBoardContainerTwo = document.querySelector('.enemy.gameboard-container');
+const gameBoardContainerOne = document.querySelector('#left-container');
+const gameBoardContainerTwo = document.querySelector('#right-container');
 
 export default class Game {
   constructor() {
     this.player = new Player('player one', new Gameboard());
     this.computerPlayer = new ComputerPlayer('player two', new Gameboard());
     this.gameOver = false;
-    this.player.gameboard.placeShip({
-      cell: 43,
-      direction: 'vertical',
-      length: 4,
-    });
-    this.player.gameboard.placeShip({
-      cell: 16,
-      direction: 'horizontal',
-      length: 4,
-    });
-    this.computerPlayer.gameboard.placeShip({
-      cell: 43,
-      direction: 'vertical',
-      length: 4,
-    });
-    this.computerPlayer.gameboard.placeShip({
-      cell: 16,
-      direction: 'horizontal',
-      length: 4,
-    });
+    this.player.gameboard.placeShipsRandomly();
+    this.computerPlayer.gameboard.placeShipsRandomly();
   }
 
   playRound(selectedCell) {
