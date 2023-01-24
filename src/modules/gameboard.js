@@ -2,14 +2,15 @@ import events from '../utilities/events';
 import Ship from './ship';
 
 const SHIPS_PER_PLAYER = [
-  { length: 5 },
   { length: 4 },
-  { length: 4 },
-  { length: 3 },
   { length: 3 },
   { length: 3 },
   { length: 2 },
   { length: 2 },
+  { length: 2 },
+  { length: 1 },
+  { length: 1 },
+  { length: 1 },
   { length: 1 },
 ];
 
@@ -124,11 +125,23 @@ export default class Gameboard {
     return this.ships.slice(1).every(({ ship }) => ship.isSunk());
   }
 
+  isThereAShipCloseTo(cell) {
+    const surroudingCells = [
+      cell + 1,
+      cell - 1,
+      cell + 10,
+      cell - 10,
+    ];
+    return surroudingCells.some((c) => typeof this.grid[c] === 'number');
+  }
+
   getRandomPosition(length) {
     let cell;
     let direction;
     do {
-      cell = Math.floor(Math.random() * 100);
+      do {
+        cell = Math.floor(Math.random() * 100);
+      } while (!this.isCellEmpty(cell) || this.isThereAShipCloseTo(cell));
       direction = Math.random() > 0.4 ? 'horizontal' : 'vertical';
       if (!this.isValidPosition(cell, length, direction)) {
         direction = direction === 'horizontal' ? 'vertical' : 'horizontal';
