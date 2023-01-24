@@ -14,8 +14,10 @@ export default class Game {
     this.player = new Player('player one', new Gameboard());
     this.computerPlayer = new ComputerPlayer('player two', new Gameboard());
     this.gameOver = false;
+    this.placementPhase = true;
     this.player.gameboard.placeShipsRandomly();
     this.computerPlayer.gameboard.placeShipsRandomly();
+    this.render();
   }
 
   playRound(selectedCell) {
@@ -60,14 +62,21 @@ export default class Game {
     this.render();
   }
 
+  startGame() {
+    this.placementPhase = false;
+    this.render();
+  }
+
   render() {
     const boardOne = playerGameboard(
       this.player.gameboard.grid,
       this.player.gameboard.ships,
+      this.placementPhase,
     );
     const boardTwo = enemyGameboard(
       this.computerPlayer.gameboard.grid,
       this.computerPlayer.gameboard.ships,
+      this.placementPhase,
     );
     render(boardOne, gameBoardContainerOne);
     render(boardTwo, gameBoardContainerTwo);

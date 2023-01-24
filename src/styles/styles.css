@@ -10,7 +10,7 @@ html {
 
 body {
   min-height: 100vh;
-  font-family: monospace;
+  font-family: sans-serif;
 }
 
 main {
@@ -25,9 +25,10 @@ main {
 
 .gameboard {
   display: grid;
+  position: relative;
   grid-template-columns: repeat(11, 1fr);
-  width: clamp(250px, calc(100vw - 20px), 400px);
-  height: clamp(250px, calc(100vw - 20px), 400px);
+  width: clamp(200px, calc(100vw - 55px), 400px);
+  height: clamp(200px, calc(100vw - 55px), 400px);
   margin: 0 auto;
 }
 
@@ -35,7 +36,7 @@ main {
 .gameboard .number-coords {
   display: grid;
   place-items: center;
-  font-size: 0.7rem;
+  font-size: clamp(8px, 2vw, 11px);
 }
 
 .gameboard .letter-coords {
@@ -67,6 +68,23 @@ main {
   left: 35%;
 }
 
+.gameboard.enemy .play-button {
+  position: absolute;
+  padding: 2% 6%;
+  top: 35%;
+  left: 15%;
+  border-radius: 5px;
+  font-size: clamp(16px, 2vw, 20px);
+  letter-spacing: .5px;
+  border: none;
+  background-image: linear-gradient(rgb(225, 240, 253), rgb(123, 187, 255));
+  box-shadow: 2px 2px 6px 1px rgb(149, 149, 149);
+}
+
+.gameboard.enemy .play-button {
+  cursor: pointer;
+}
+
 .gameboard.enemy .cell.sunk {
   outline: 3px solid rgb(255, 0, 0);
   outline-offset: -2px;
@@ -77,6 +95,16 @@ main {
   outline: 3px solid green;
   outline-offset: -2px;
   z-index: 2;
+}
+
+.gameboard.enemy .cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(100% + 10px);
+  height: calc(100% + 10px);
+  z-index: 10;
+  background-color: rgba(255, 255, 255, 0.672);
 }
 
 .gameboard .cell.occupied.hit::after,

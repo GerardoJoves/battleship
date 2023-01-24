@@ -1,10 +1,22 @@
-import { html } from 'lit-html';
+import { html, nothing } from 'lit-html';
 import { coordsLetters, coordsNums } from './coords';
 import attackEnemy from '../event-handlers/attack-enemy';
 import gameboardCell from './cell';
+import startGame from '../event-handlers/start-game';
 
-export default function enemyGameboard(boardState, ships) {
-  return html`<div class="gameboard enemy" @click=${attackEnemy}>
+function cover() {
+  return html`<div class="cover">
+    <button
+    @click=${startGame}
+    class="play-button">Play</button>
+  </div>`;
+}
+
+export default function enemyGameboard(boardState, ships, placementPhase) {
+  return html`<div
+    class="gameboard enemy"
+    @click=${placementPhase ? nothing : attackEnemy}>
+    ${placementPhase ? cover() : ''}
     ${coordsLetters()}
     ${coordsNums()}
     ${boardState.map((cell, i) => {

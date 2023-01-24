@@ -4,6 +4,15 @@ import isValidCell from '../utilities/isValidCell';
 let ship = null;
 let cellWidth = 0;
 
+function getCellNumber() {
+  const rect = ship.getBoundingClientRect();
+  const shipFrontCoordX = rect.left + cellWidth / 2;
+  const shipFrontCoordY = rect.top + cellWidth / 2;
+  const els = document.elementsFromPoint(shipFrontCoordX, shipFrontCoordY);
+  const cellNum = els.find((el) => el.hasAttribute('data-cell-number'));
+  return cellNum;
+}
+
 function drag(e) {
   e.preventDefault();
   ship.classList.add('dragging');
@@ -12,11 +21,7 @@ function drag(e) {
 }
 
 function drop() {
-  const rect = ship.getBoundingClientRect();
-  const shipFrontCoordX = rect.left + cellWidth / 2;
-  const shipFrontCoordY = rect.top + cellWidth / 2;
-  const els = document.elementsFromPoint(shipFrontCoordX, shipFrontCoordY);
-  const cell = els.find((el) => el.hasAttribute('data-cell-number'));
+  const cell = getCellNumber();
   ship.classList.remove('dragging');
   ship.style.zIndex = 5;
   ship.style.top = '1px';
