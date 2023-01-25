@@ -7,6 +7,10 @@ export default class ComputerPlayer {
     this.gameboard = gameboard;
   }
 
+  nextMove() {
+    return this.randomAttack();
+  }
+
   randomAttack() {
     if (this.attacks.length === 0) return null;
     return this.attacks.pop();

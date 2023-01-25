@@ -101,16 +101,20 @@ export default class Gameboard {
 
   receiveAttack(cell) {
     const cellContent = this.grid[cell];
-    // a cell with a number indicates the index of the ship placed on that cell
     if (Number.isInteger(cellContent)) {
+      // hit ship
       const { ship } = this.ships[cellContent];
       ship.hit();
-      // a hit ship is represented by the index of the ship but negative
       this.grid[cell] = Math.abs(cellContent) * -1;
-    } else if (cellContent === null) {
-      // there's nothing on this cell. It's a missed shot
-      this.grid[cell] = '.';
+      const shipSunk = ship.isSunk();
+      return { hitShip: true, shipSunk };
     }
+    if (cellContent === null) {
+      // missed-shot
+      this.grid[cell] = '.';
+      return { hitShip: false };
+    }
+    return { hitShip: false };
   }
 
   isPlayableCell(cell) {

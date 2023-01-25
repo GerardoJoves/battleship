@@ -1,11 +1,13 @@
 import './styles/styles.css';
-import Game from './modules/game-loop';
 import events from './utilities/events';
+import GameAgainstComputer from './modules/game-against-computer';
 
 let game = null;
 
 function setupNewGame() {
-  game = new Game();
+  game = new GameAgainstComputer();
+  game.randomise(game.playerOne);
+  game.randomise(game.playerTwo);
 }
 
 window.addEventListener('load', setupNewGame);
@@ -23,5 +25,5 @@ events.on('rotate ship at cell', (cell) => {
 });
 
 events.on('start game', () => {
-  game.startGame();
+  game.startBattle();
 });
