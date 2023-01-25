@@ -6,10 +6,11 @@ import staticShip from './static-ship';
 
 export default function playerGameboard(boardState, ships, preparationPhase) {
   const renderedShips = [];
-  return html`<div class="gameboard player">
-    ${coordsLetters()}
-    ${coordsNums()}
-    ${boardState.map((cell, i) => {
+  return html`<div>
+    <div class="gameboard player">
+      ${coordsLetters()}
+      ${coordsNums()}
+      ${boardState.map((cell, i) => {
     if (cell === '.') return gameboardCell('cell missed-shot', i);
     if (cell === null) return gameboardCell('cell empty', i);
     if (cell > 0 && renderedShips.includes(cell)) return gameboardCell('cell occupied', i);
@@ -22,5 +23,7 @@ export default function playerGameboard(boardState, ships, preparationPhase) {
     if (cell > 0) return gameboardCell('cell occupied', i, ship);
     return gameboardCell('cell occupied hit', i, ship);
   })}
+  </div>
+  <div class="gameboard-label">Your grid</div>
   </div>`;
 }

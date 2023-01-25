@@ -13,7 +13,8 @@ function cover() {
 }
 
 export default function enemyGameboard(boardState, ships, placementPhase) {
-  return html`<div
+  return html`<div>
+    <div
     class="gameboard enemy"
     @click=${placementPhase ? nothing : attackEnemy}>
     ${placementPhase ? cover() : ''}
@@ -25,5 +26,7 @@ export default function enemyGameboard(boardState, ships, placementPhase) {
     if (ships[Math.abs(cell)].ship.isSunk()) return gameboardCell('cell occupied hit sunk', i);
     return gameboardCell('cell occupied hit', i);
   })}
+  </div>
+  <div class="gameboard-label">Opponent's grid</div>
   </div>`;
 }

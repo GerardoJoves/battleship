@@ -10,6 +10,7 @@ html {
 
 body {
   min-height: 100vh;
+  color: rgb(69, 69, 69);
   font-family: sans-serif;
 }
 
@@ -23,12 +24,18 @@ main {
   padding: 20px;
 }
 
+header .logo {
+  text-align: center;
+  padding: 30px 0 10px 0;
+  font-size: 1.2rem;
+}
+
 .gameboard {
   display: grid;
   position: relative;
   grid-template-columns: repeat(11, 1fr);
-  width: clamp(200px, calc(100vw - 55px), 400px);
-  height: clamp(200px, calc(100vw - 55px), 400px);
+  width: clamp(200px, calc(100vw - 55px), 380px);
+  height: clamp(200px, calc(100vw - 55px), 380px);
   margin: 0 auto;
 }
 
@@ -36,7 +43,7 @@ main {
 .gameboard .number-coords {
   display: grid;
   place-items: center;
-  font-size: clamp(8px, 2vw, 11px);
+  font-size: .7rem;
 }
 
 .gameboard .letter-coords {
@@ -60,25 +67,27 @@ main {
   content: '';
   z-index: 2;
   position: absolute;
-  width: 30%;
-  height: 30%;
+  width: 25%;
+  height: 25%;
   background-color: gray;
   border-radius: 50%;
-  top: 35%;
-  left: 35%;
+  top: 40%;
+  left: 40%;
 }
 
 .gameboard.enemy .play-button {
   position: absolute;
-  padding: 2% 6%;
-  top: 35%;
-  left: 15%;
-  border-radius: 5px;
-  font-size: clamp(16px, 2vw, 20px);
+  padding: 3% 7%;
+  color: white;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 18px;
+  font-size: 1.2rem;
   letter-spacing: .5px;
   border: none;
-  background-image: linear-gradient(rgb(225, 240, 253), rgb(123, 187, 255));
-  box-shadow: 2px 2px 6px 1px rgb(149, 149, 149);
+  background-color: rgb(49, 49, 255);
+  box-shadow: 2px 1px 5px 1px rgb(165, 165, 165);
 }
 
 .gameboard.enemy .play-button {
@@ -104,7 +113,7 @@ main {
   width: calc(100% + 10px);
   height: calc(100% + 10px);
   z-index: 10;
-  background-color: rgba(255, 255, 255, 0.672);
+  background-color: rgba(255, 255, 255, 0.489);
 }
 
 .gameboard .cell.occupied.hit::after,
@@ -157,6 +166,12 @@ main {
   border-color: rgb(208, 0, 0);
 }
 
+.gameboard-label {
+  padding: 16px 0;
+  text-align: center;
+  font-size: 1rem;
+}
+
 @keyframes shake {
   10%, 90% {
     transform: translate3d(-1px, 0, 0);
@@ -173,4 +188,8 @@ main {
   40%, 60% {
     transform: translate3d(4px, 0, 0);
   }
+}
+
+@media only screen and (max-width: 600px) {
+  html {font-size: 12px;}
 }
