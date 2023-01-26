@@ -30,6 +30,7 @@ export default class Game {
   }
 
   randomise(player) {
+    player.gameboard.reset();
     player.gameboard.placeShipsRandomly();
     this.render();
   }

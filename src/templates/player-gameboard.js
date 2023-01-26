@@ -1,10 +1,23 @@
-import { html } from 'lit-html';
+import { html, nothing } from 'lit-html';
 import gameboardCell from './cell';
 import { coordsLetters, coordsNums } from './coords';
 import draggableShip from './draggable-ship';
 import staticShip from './static-ship';
+import randomise from '../event-handlers/randomise';
+import reset from '../event-handlers/reset';
 
-export default function playerGameboard(boardState, ships, preparationPhase) {
+function label() {
+  return html`<div class="gameboard-label">Your grid</div>`;
+}
+
+function boardButtons() {
+  return html`<div class="gameboard-options">
+    <button @click=${randomise}>Randomise</button>
+    <button @click=${reset}>Reset</button>
+  </div>`;
+}
+
+export default function playerGameboard(boardState, ships, arrangingShips) {
   const renderedShips = [];
   return html`<div>
     <div class="gameboard player">
@@ -19,11 +32,12 @@ export default function playerGameboard(boardState, ships, preparationPhase) {
     }
     renderedShips.push(Math.abs(cell));
     const { position } = ships[Math.abs(cell)];
-    const ship = preparationPhase ? draggableShip(position) : staticShip(position);
+    const ship = arrangingShips ? draggableShip(position) : staticShip(position);
     if (cell > 0) return gameboardCell('cell occupied', i, ship);
     return gameboardCell('cell occupied hit', i, ship);
   })}
   </div>
-  <div class="gameboard-label">Your grid</div>
+  ${label()}
+  ${arrangingShips ? boardButtons() : nothing}
   </div>`;
 }

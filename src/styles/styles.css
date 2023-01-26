@@ -30,6 +30,10 @@ header .logo {
   font-size: 1.5rem;
 }
 
+button:hover {
+  cursor: pointer;
+}
+
 .gameboard {
   display: grid;
   position: relative;
@@ -88,10 +92,6 @@ header .logo {
   border: none;
   background-color: rgb(49, 49, 255);
   box-shadow: 2px 1px 5px 1px rgb(165, 165, 165);
-}
-
-.gameboard.enemy .play-button {
-  cursor: pointer;
 }
 
 .gameboard.enemy .cell.sunk {
@@ -170,6 +170,21 @@ header .logo {
   padding: 16px 0;
   text-align: center;
   font-size: 1rem;
+}
+
+.gameboard-options {
+  display: flex;
+  justify-content: space-around;
+  padding: 20px 0;
+}
+
+.gameboard-options button {
+  background-color: rgb(49, 49, 255);
+  font-size: 1rem;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 4px 22px;
 }
 
 @keyframes shake {

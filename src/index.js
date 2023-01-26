@@ -27,3 +27,7 @@ events.on('rotate ship at cell', (cell) => {
 events.on('start game', () => {
   game.startBattle();
 });
+
+events.on('randomise', () => {
+  game.randomise(game.playerOne);
+});

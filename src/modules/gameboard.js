@@ -117,6 +117,11 @@ export default class Gameboard {
     return { hitShip: false };
   }
 
+  reset() {
+    this.grid = Array(100).fill(null);
+    this.ships = [null];
+  }
+
   isPlayableCell(cell) {
     return this.grid[cell] === null || this.grid[cell] > 0;
   }
