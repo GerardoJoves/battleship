@@ -55,7 +55,7 @@ export default class Moves {
       return move;
     }
 
-    // target has received more than one shot, thus it is possible to deduce its direciton
+    // target has received more than one shot, thus its direciton can be deduce
     if (Math.abs(hitsRecord[0] - hitsRecord[1]) === 1) {
       // target's direction is horizontal
       const rightMostSlot = hitsRecord[hitsRecord.length - 1];

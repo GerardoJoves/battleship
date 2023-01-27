@@ -71,13 +71,13 @@ export default class Game {
     && this.playerTwo.gameboard.isPlayableCell(cell));
   }
 
-  changePlayerShipPosition(prevCell, newCell) {
-    this.playerOne.gameboard.changeShipPosition(prevCell, newCell);
+  changePlayerShipPosition(player, prevCell, newCell) {
+    player.gameboard.changeShipPosition(prevCell, newCell);
     this.render();
   }
 
-  rotatePlayerShip(cell) {
-    this.playerOne.gameboard.rotateShipAtCell(cell);
+  rotatePlayerShip(player, cell) {
+    player.gameboard.rotateShipAtCell(cell);
     this.render();
   }
 
