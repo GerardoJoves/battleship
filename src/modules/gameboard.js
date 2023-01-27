@@ -3,14 +3,13 @@ import Ship from './ship';
 
 const SHIPS_PER_PLAYER = [
   { length: 4 },
+  { length: 4 },
   { length: 3 },
   { length: 3 },
+  { length: 3 },
   { length: 2 },
   { length: 2 },
   { length: 2 },
-  { length: 1 },
-  { length: 1 },
-  { length: 1 },
   { length: 1 },
 ];
 

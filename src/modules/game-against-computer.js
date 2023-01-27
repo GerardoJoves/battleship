@@ -27,6 +27,6 @@ export default class GameAgainstComputer extends Game {
       if (this.turn === this.playerTwo) {
         this.computerPlay();
       }
-    }, 400);
+    }, 200);
   }
 }
