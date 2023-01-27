@@ -74,14 +74,14 @@ export default class Moves {
 
     // target's direction must be vertical
     const topMostSlot = hitsRecord[0];
-    const bottomMostSlots = hitsRecord[hitsRecord.length - 1];
+    const bottomMostSlot = hitsRecord[hitsRecord.length - 1];
     if (topMostSlot > 9 && this.slots.includes(topMostSlot - 10)) {
       const slot = topMostSlot - 10;
       this.removeFromAvailableSlots(slot);
       return slot;
     }
-    if (bottomMostSlots < 90 && this.slots.includes(bottomMostSlots + 10)) {
-      const slot = bottomMostSlots + 10;
+    if (bottomMostSlot < 90 && this.slots.includes(bottomMostSlot + 10)) {
+      const slot = bottomMostSlot + 10;
       this.removeFromAvailableSlots(slot);
       return slot;
     }
@@ -101,7 +101,7 @@ export default class Moves {
       return;
     }
     this.target.hitsRecord.push(slot);
-    this.target.hitsRecord.sort();
+    this.target.hitsRecord.sort((a, b) => a - b);
   }
 
   setTarget(slot) {

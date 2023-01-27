@@ -38,7 +38,7 @@ events.on('randomise', () => {
 });
 
 events.on('hit player ship', (slot) => {
-  game.playerTwo.hitsEnemyShip(slot);
+  game.playerTwo.hitsEnemyShip(Number.parseInt(slot, 10));
 });
 
 events.on('winner', (player) => {
