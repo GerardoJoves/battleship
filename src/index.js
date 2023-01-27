@@ -31,3 +31,7 @@ events.on('start game', () => {
 events.on('randomise', () => {
   game.randomise(game.playerOne);
 });
+
+events.on('hit player ship', (slot) => {
+  game.playerTwo.hitsEnemyShip(slot);
+});

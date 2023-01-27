@@ -4,7 +4,6 @@ import { coordsLetters, coordsNums } from './coords';
 import draggableShip from './draggable-ship';
 import staticShip from './static-ship';
 import randomise from '../event-handlers/randomise';
-import reset from '../event-handlers/reset';
 
 function label() {
   return html`<div class="gameboard-label">Your grid</div>`;
@@ -13,7 +12,6 @@ function label() {
 function boardButtons() {
   return html`<div class="gameboard-options">
     <button @click=${randomise}>Randomise</button>
-    <button @click=${reset}>Reset</button>
   </div>`;
 }
 

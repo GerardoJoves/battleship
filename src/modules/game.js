@@ -42,6 +42,7 @@ export default class Game {
 
   endGame() {
     this.gameOver = true;
+    this.turn = null;
   }
 
   changeTurn() {
@@ -49,9 +50,11 @@ export default class Game {
   }
 
   play(cell) {
-    if (!isValidCell(cell)) return;
+    if (typeof cell !== 'number') this.endGame();
+    if (this.gameOver) return {};
+    if (!isValidCell(cell)) return {};
     const target = this.turn === this.playerOne ? this.playerTwo : this.playerOne;
-    if (!target.gameboard.isPlayableCell(cell)) return;
+    if (!target.gameboard.isPlayableCell(cell)) return {};
     const attackResult = attack(target, cell);
     if (!attackResult.hitShip) this.changeTurn();
     if (isLoser(target)) {
@@ -59,6 +62,7 @@ export default class Game {
       this.endGame();
     }
     this.render();
+    return attackResult;
   }
 
   isValidMove(cell) {

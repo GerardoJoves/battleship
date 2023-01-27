@@ -13,13 +13,20 @@ export default class GameAgainstComputer extends Game {
 
   playRound(cell) {
     this.play(cell);
-    while (this.turn === this.playerTwo) {
-      this.computerPlay();
-    }
+    this.computerPlay();
   }
 
   computerPlay() {
-    const nextMove = this.playerTwo.nextMove();
-    this.play(nextMove);
+    setTimeout(() => {
+      if (this.turn !== this.playerTwo) return;
+      const nextMove = this.playerTwo.nextMove();
+      const attackResult = this.play(nextMove);
+      if (attackResult.hitShip) {
+        this.playerTwo.hitsEnemyShip(nextMove);
+      }
+      if (this.turn === this.playerTwo) {
+        this.computerPlay();
+      }
+    }, 400);
   }
 }
